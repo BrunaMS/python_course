@@ -48,3 +48,12 @@ def search_name(names):
 		print 'Ohh, fine! %s is already on the list!' % (name)
 	else:
 		print 'Sorry, %s is not registered.' % (name) 
+
+
+def search_regex(names):
+    print('Type the regular expression:')
+    regex = raw_input()
+    cat_names = join(names)
+    result = re.findall(r(regex, cat_names)
+    print (result)
+	return result

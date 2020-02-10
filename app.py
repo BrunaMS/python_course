@@ -20,9 +20,10 @@ def menu():
 			edit_name(names)
 		elif (choose == '5'):
 			search_name(names)
+		elif (choose == '6'):
+			search_regex(names)
 		elif (choose == '0'):
 			return
 		else:
 			print 'Sorry, this option is not a valid option. Try again.'
-
 menu()
