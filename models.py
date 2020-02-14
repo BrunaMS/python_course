@@ -14,6 +14,7 @@ class Profile(object):
 		self.name = name
 		self.number = number
 		self.company = company
+		self.__likes = 0
 		# To import: from models import Profile
 		# Called (without self): Perfil('Bruna', '000-000', 'undefined')
 	
@@ -22,6 +23,13 @@ class Profile(object):
 		print 'Name: %s, Number: %s, Company: %s' % (self.name, self.number, self.company)
 		# This 'function' isn't builder, is a method of our class
 
+	def like(self):
+		self.__likes+=1
+
+	def print_likes(self):
+		print "This post has %s likes :)" % (self.__likes)
+		# Can use the return to 'export' the value printing nothing
+		# return self.__likes
 class Date(object):
     'Default class to configure dates.'
     def __init__(self, day, month, year):
