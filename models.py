@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-
 class Profile(object):
 	# Old style: Profile()
 	# New style: Profile(object) 
@@ -30,6 +29,26 @@ class Profile(object):
 		print "This post has %s likes :)" % (self.__likes)
 		# Can use the return to 'export' the value printing nothing
 		# return self.__likes
+	def get_likes(self):
+		# print "This post has %s likes :)" % (self.__likes)
+		# Can use the return to 'export' the value printing nothing
+		return self.__likes
+
+class VipProfile(Profile):
+	# Old style: Profile()
+	# New style: Profile(object) 
+	# The new style add a lot of new utilities and tools.
+	# Description (optional)
+	'Default class for user profiles.'
+	def __init__(self, name, number, company, nickname):
+		super(VipProfile, self).__init__(name, number, company)
+		self.nickname = nickname
+		
+	def get_credits(self):
+		return super(VipProfile, self).get_likes() * 10
+		# else:
+		# 	return self.__likes
+
 class Date(object):
     'Default class to configure dates.'
     def __init__(self, day, month, year):
