@@ -34,13 +34,38 @@ class Profile(object):
 		# Can use the return to 'export' the value printing nothing
 		return self.__likes
 
+
+	# Using static method we don't need generate a instance before
+	# call the next method. That is, we don't need create a object 
+	# of the class before call the following method. With it, 
+	# we don't need send the self either.
+	# @staticmethod
+	# Using class method, we receive the class of the object (the Python do it for us)
+	# in the 1st argument and we can use it to avoid a error with the type of the objects. 
+	@classmethod
+	def read_profiles_arch(obj_class, file_name):
+		# The file name also must have the extension  
+		profiles = []
+		archive = open(file_name, 'r')
+		for rows in archive:
+			values = rows.split(',')
+			profiles.append(obj_class(*values)) 
+			# The 'Profile'/obj_class in this case, is used to "force" 
+			# the variable values to be separated/organized 
+			# according to the attributes of the Profile builder,
+			# like a Type Casting.
+		archive.close()
+		return profiles
+
 class VipProfile(Profile):
 	# Old style: Profile()
 	# New style: Profile(object) 
 	# The new style add a lot of new utilities and tools.
 	# Description (optional)
-	'Default class for user profiles.'
-	def __init__(self, name, number, company, nickname):
+	'Default class for VIP users profiles.'
+	# In this case, the nickname is optional and if isn't sent
+	# it remains blank.
+	def __init__(self, name, number, company, nickname = ''):
 		super(VipProfile, self).__init__(name, number, company)
 		self.nickname = nickname
 		
