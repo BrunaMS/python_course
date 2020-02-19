@@ -10,6 +10,8 @@ class Profile(object):
 	# Called every time that we create a parameter throught a class
 	# After the 'self' we can add the parameters that we need.
 	def __init__(self, name, number, company):
+		if(len(name) < 3): # Can be used to write something to the user.
+			raise InvalidArgument('Each nome into the archive must have 3 characters or more.')
 		self.name = name
 		self.number = number
 		self.company = company
@@ -44,18 +46,40 @@ class Profile(object):
 	# in the 1st argument and we can use it to avoid a error with the type of the objects. 
 	@classmethod
 	def read_profiles_arch(obj_class, file_name):
-		# The file name also must have the extension  
-		profiles = []
-		archive = open(file_name, 'r')
-		for rows in archive:
-			values = rows.split(',')
-			profiles.append(obj_class(*values)) 
-			# The 'Profile'/obj_class in this case, is used to "force" 
-			# the variable values to be separated/organized 
-			# according to the attributes of the Profile builder,
-			# like a Type Casting.
-		archive.close()
-		return profiles
+		# The file name also must have the extension 
+		archive = None
+		try: 
+			profiles = []
+			archive = open(file_name, 'r')
+			for rows in archive:
+				values = rows.split(',')
+				profiles.append(obj_class(*values)) 
+				# The 'Profile'/obj_class in this case, is used to "force" 
+				# the variable values to be separated/organized 
+				# according to the attributes of the Profile builder,
+				# like a Type Casting.
+		except IOError as error:
+			print("Sorry, we couldn't open the file. Verify if the archive really exists.\n Error: %s") % error
+		# 	return ''
+		except TypeError as error:
+			print("Sorry, we couldn't perform this operation. Verify if there is any incorrect information.\n Error: %s") % error
+		# 	return ''
+		# We can use only one except block
+		except (TypeError, IOError, ValueError) as error:
+			print("Sorry, we couldn't perform this operation. \n Error: %s") % error
+		
+		# Except: # Generic, happenning if there was any error of any type.
+		finally: # Executed in any situation
+			if(archive is not None):
+				archive.close()
+			return profiles
+class InvalidArgument(Exception):
+	def __init__(self, message):
+		self.message = message
+
+	def __str__(self):
+		return repr(self.message)
+
 
 class VipProfile(Profile):
 	# Old style: Profile()
